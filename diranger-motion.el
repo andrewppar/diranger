@@ -1,4 +1,4 @@
-;;; diranger-core.el --- Some Dired Improvements -*- lexical-binding: t -*-
+;;; diranger-motion.el --- Some Dired Improvements -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2023-2023 Andrew Parisi
 
@@ -6,18 +6,15 @@
 ;; Created: 29 August 2023
 ;; Homepage: N/A
 ;; Keywords: dired
-;; Package-Requires: ((emacs "28") (dash "2.12.1"))
 ;; SPDX-License-Identifier: MIT
-;; Version: 3.0
+;; Version: 0.1
 
 ;;; Commentary:
 
-;; I like ranger, but its too opinionated about bindings :(
+;; Functions for moving around the diranger buffers
 
 ;;; Code:
 (require 'diranger-core)
-(require 'dash)
-(require 'ivy)
 
 (defvar *diranger-focused-entry* nil)
 

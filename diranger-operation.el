@@ -6,22 +6,18 @@
 ;; Created: 29 August 2023
 ;; Homepage: N/A
 ;; Keywords: dired
-;; Package-Requires: ((emacs "28") (dash "2.12.1"))
 ;; SPDX-License-Identifier: MIT
-;; Version: 3.0
+;; Version: 0.1
 
 ;;; Commentary:
 
-;; I like ranger, but its too opinionated about bindings :(
-;; I can't find a way to not use evil's motion map
+;; Functions for doing operations on the filesystem.
 
 ;;; Code:
 
 (require 'diranger-core)
 (require 'diranger-motion)
 (require 'diranger-utils)
-
-(require 'dash)
 
 (defvar *diranger-kill-ring* '())
 

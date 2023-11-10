@@ -6,13 +6,15 @@
 ;; Created: 29 August 2023
 ;; Homepage: N/A
 ;; Keywords: dired
-;; Package-Requires: ((emacs "28") (dash "2.12.1))
+;; Package-Requires: ((emacs "28") (dash "2.19.1) (ivy "0.1.7"))
 ;; SPDX-License-Identifier: MIT
-;; Version: 3.0
+;; Version: 0.1
 
 ;;; Commentary:
 
-;; I like ranger, but its too opinionated about bindings :(
+;; I like ranger, but it's too opinionated about it's bindings.  I've
+;; been using this on a local machine for a while but want it in
+;; my other Emacs configurations.
 
 ;;; Code:
 

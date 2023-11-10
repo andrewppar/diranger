@@ -7,19 +7,17 @@
 ;; Homepage: N/A
 ;; Keywords: dired
 
-
 ;; SPDX-License-Identifier: MIT
 ;; Version: 0.1
-;; Package-Requires: ((emacs "28") (dash "2.12.1"))
 
 ;;; Commentary:
 
-;; I like ranger, but its too opinionated about bindings :(
+;; Core functions for diranger.  Includes things like: setting up layout,
+;; getting information about the filesystem, and managing the preview buffer.
 
 ;;; Code:
 ;; TODO: replace any (format "%s/%s"...) with the right file-... function
 
-(require 'dash)
 (require 'diranger-utils)
 
 (defvar *diranger-previous-buffer* "*diranger-previous*")

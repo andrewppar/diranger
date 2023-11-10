@@ -8,11 +8,10 @@
 ;; Keywords: dired
 ;; SPDX-License-Identifier: MIT
 ;; Version: 0.1
-;; Package-Requires: ((emacs "28") (dash "2.12.1"))
 
 ;;; Commentary:
 
-;; I like ranger, but its too opinionated about bindings :(
+;; The functionality around the diranger major mode.
 
 ;;; Code:
 (require 'diranger-motion)
