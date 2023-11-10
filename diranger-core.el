@@ -40,7 +40,7 @@
 
 (defmacro do-diranger-marks (spec &rest body)
   "Iterate over the mark cache executing BODY binding SPEC."
-  (declare '(indent defun))
+  (declare (indent defun))
   (let ((dir-var (car spec))
 	(file-var (cadr spec))
 	(type-var (caddr spec)))
@@ -255,7 +255,8 @@
     (other-window 1)
     (diranger-switch-to-focused-buffer)
     (with-diranger-buffer *diranger-focused-buffer*
-      (diranger-show-directory focused-entry))
+      (diranger-show-directory focused-entry)
+      (setq default-directory focused-entry))
     (split-window-right)
     (other-window 1)
     (switch-to-buffer *diranger-preview-buffer*)

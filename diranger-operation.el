@@ -169,7 +169,7 @@
 	(copy-file from to-name)
 	(message (format "Copied %s to %s" original to-name))))))
 
-(defun diranger-paste ()
+(defun-diranger-operation diranger-paste ()
   "Copy the last yanked entry to the current dir."
   (interactive)
   (cl-destructuring-bind (original . from)
@@ -202,7 +202,7 @@
 
 ;; TODO: for copy and rename maybe also support a batch case where the
 ;; TO is specified by a regex? seems like a feature I would never use.
-(defun diranger-copy ()
+(defun-diranger-operation diranger-copy ()
   "Diranger: Copy one file to another."
   (interactive)
   (let ((from (expand-file-name (diranger-selected-entry)))
@@ -212,7 +212,7 @@
 	  (t
 	   (copy-file from to t)))))
 
-(defun diranger-rename ()
+(defun-diranger-operation diranger-rename ()
   "Diranger: Rename one file to another."
   (interactive)
   (let ((from (expand-file-name (diranger-selected-entry)))
@@ -226,13 +226,17 @@
 	     (copy-file from to t)
 	     (delete-file from))))))
 
-(defun diranger-delete ()
+(defun-diranger-operation diranger-delete ()
   "Delete the entry at point."
-  (let ((to-delete (expand-file-name (diranger-selected-entry)))
-	(delete? (y-or-n-p
-		  (format "Would you like to delete %s? " to-delete))))
+  (interactive)
+  (let* ((to-delete (expand-file-name (diranger-selected-entry)))
+	 (delete? (y-or-n-p
+		   (format "Would you like to delete %s? " to-delete))))
     (when delete?
       (diranger-delete-item to-delete))))
+
+(defun-diranger-operation diranger-refresh ()
+  "Refresh the current focused buffer.")
 
 (provide 'diranger-operation)
 ;;; diranger-operation.el ends here

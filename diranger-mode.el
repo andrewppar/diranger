@@ -30,6 +30,12 @@
   (setq-local cursor-type nil)
   (use-local-map diranger-mode-map))
 
+(defun diranger-check-exit ()
+  "If it's time to exit, leave quit diranger."
+  (unless (diranger-visible-p)
+    (delete-other-windows)
+    (diranger-quit)))
+
 (defun diranger-start (&optional filename)
   "Start diranger either using `default-directory` or passed FILENAME."
   (interactive)
@@ -39,6 +45,7 @@
       (hl-line-mode)
       (diranger-refresh-layout entry)
       (diranger-mode)
+      (add-hook 'window-configuration-change-hook 'diranger-check-exit)
       (let ((selected-entry (format
 			     "%s%s"
 			     entry (diranger-directory-item-at-point))))
@@ -49,7 +56,7 @@
   "C" #'dirnager-copy
   "D" #'diranger-delete
   "f" #'diranger-jump
-  "gr" #'diranger-motion-refresh
+  "gr" #'diranger-refresh
   "h" #'diranger-out
   "j" #'diranger-forward-line
   "k" #'diranger-backward-line
