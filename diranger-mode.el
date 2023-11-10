@@ -52,26 +52,5 @@
 	(save-window-excursion
 	  (diranger-preview-buffer entry selected-entry))))))
 
-(evil-define-key 'normal diranger-mode-map
-  "C" #'dirnager-copy
-  "D" #'diranger-delete
-  "f" #'diranger-jump
-  "gr" #'diranger-refresh
-  "h" #'diranger-out
-  "j" #'diranger-forward-line
-  "k" #'diranger-backward-line
-  "l" #'diranger-into
-  "mx" #'diranger-mark-delete
-  "mu" #'diranger-unset-mark-at-point
-  "mU" #'diranger-unset-all-marks
-  "pp" #'diranger-paste
-  "pr" #'diranger-paste-from-ring
-  "q" #'diranger-quit
-  "R" #'diranger-rename
-  "x" #'diranger-execute-marks
-  "yy" #'diranger-yank
-  "yx" #'diranger-cut
-  (kbd "RET") #'diranger-into)
-
 (provide 'diranger-mode)
 ;;; diranger-mode.el ends here
