@@ -44,7 +44,7 @@
       (hl-line-mode)
       (diranger-refresh-layout entry)
       (diranger-mode)
-      (add-hook 'window-configuration-change-hook 'diranger-check-exit)
+      ;;(add-hook 'window-configuration-change-hook 'diranger-check-exit)
       (let ((selected-entry (format
 			     "%s%s"
 			     entry (diranger-directory-item-at-point))))

@@ -29,7 +29,8 @@
   (delete-other-windows)
   (mapcar #'kill-buffer *diranger-buffers*)
   (setq *diranger-focused-entry* nil)
-  (remove-hook 'window-configuration-change-hook 'diranger-check-exit))
+ ;; (remove-hook 'window-configuration-change-hook 'diranger-check-exit)
+  )
 
 (defmacro defun-diranger-motion (name comment &rest body)
   "Create a diranger motion function with NAME and COMMENT to execute BODY."
