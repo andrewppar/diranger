@@ -19,6 +19,7 @@
 ;; TODO: replace any (format "%s/%s"...) with the right file-... function
 
 (require 'diranger-utils)
+(require 'dash)
 
 (defvar *diranger-previous-buffer* "*diranger-previous*")
 (defvar *diranger-focused-buffer* "*diranger-focus*")
