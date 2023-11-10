@@ -82,7 +82,7 @@
    OPERATION-FN is expected to take three arguments for the
    current file and directory."
   (let* ((file (diranger-directory-item-at-point))
-	 (dir  (diranger-get-focused-entry)))
+	 (dir  (expand-file-name (diranger-get-focused-entry))))
     (funcall operation-fn dir file)))
 
 (defun diranger-set-mark-at-point (type)
@@ -96,7 +96,8 @@
   (interactive)
   (diranger-mark-operation-at-point
    (lambda (directory file)
-     (diranger-pop-mark directory file))))
+     (let ((unmarked-file (string-trim (substring file 0 -2))))
+       (diranger-pop-mark directory unmarked-file)))))
 
 (defun diranger-unset-all-marks ()
   "Unset any recorded diranger mark."

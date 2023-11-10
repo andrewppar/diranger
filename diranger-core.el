@@ -142,13 +142,13 @@
 
 (defun diranger-color-for-mark-type (type)
   "Return the hex color for a mark of type TYPE."
-  (cl-case type
-    (:delete "#C85BFF")))
+  (cond ((eql type :delete) "#C85BFF")
+	(t nil)))
 
 (defun diranger-mark-for-mark-type (type)
   "Return the mark for a mark of type TYPE."
-  (cl-case type
-    (:delete "X")))
+  (cond ((eql type :delete) "X")
+	(t nil)))
 
 (defun diranger-make-marked-line (path-name mark longest-line)
   "Produce a new line for PATH-NAME with MARK separated by LONGEST-LINE."
