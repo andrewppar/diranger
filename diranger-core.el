@@ -16,6 +16,10 @@
 
 ;;; Code:
 ;; TODO: replace any (format "%s/%s"...) with the right file-... function
+
+(require 'dash)
+(require 'diranger-utils)
+
 (defvar *diranger-previous-buffer* "*diranger-previous*")
 (defvar *diranger-focused-buffer* "*diranger-focus*")
 (defvar *diranger-preview-buffer* "*diranger-preview*")
@@ -84,8 +88,7 @@
   (if (get-buffer *diranger-focused-buffer*)
       (switch-to-buffer *diranger-focused-buffer*)
     (progn
-      (switch-to-buffer *diranger-focused-buffer*)
-      (hl-line-mode 1))))
+      (switch-to-buffer *diranger-focused-buffer*))))
 
 (defun buffer-visible-p (buffer-or-string)
   "Check where BUFFER-OR-STRING is in a window."
@@ -103,11 +106,11 @@
   (and (buffer-visible-p *diranger-previous-buffer*)
        (buffer-visible-p *diranger-focused-buffer*)
        (buffer-visible-p *diranger-preview-buffer*)
-       (every?
+       (-every-p
 	(lambda (buffer-name)
 	  (member buffer-name *diranger-buffers*))
 	(mapcar
-	 (comp buffer-name window-buffer)
+	 (-compose buffer-name window-buffer)
 	 (window-list)))))
 
 (defun diranger-dired-dir-linep (line)
@@ -125,7 +128,7 @@
 (defun diranger-dired-path-name (line)
   "The name of the path at LINE."
   (let ((line-list (split-string line " " t "\n")))
-    (string-join (drop 8 line-list) " ")))
+    (string-join (-drop 8 line-list) " ")))
 
 (defun diranger-dired-metadata (line)
   "Get Dired metadata for LINE."
@@ -150,7 +153,7 @@
   "Produce a new line for PATH-NAME with MARK separated by LONGEST-LINE."
   (let ((color (diranger-color-for-mark-type mark))
 	(mark-string (diranger-mark-for-mark-type mark))
-	(padding     (make-string (- longest-line (length path-name)) 32)))
+	(padding (make-string (- longest-line (length path-name)) 32)))
     (propertize
      (format "%s%s %s" path-name padding mark-string)
      'face `(:foreground ,color))))
@@ -162,7 +165,7 @@
    *diranger-buffer->file-properties*."
   (let* ((path-name (diranger-dired-path-name line))
 	 (metadata (diranger-dired-metadata line))
-	 (mark     (diranger-get-mark full-path path-name)))
+	 (mark (diranger-get-mark full-path path-name)))
     (setq *diranger-buffer->file-properties*
 	  (alist-update *diranger-buffer->file-properties*
 			(expand-file-name (format "%s/%s" full-path path-name))
@@ -201,13 +204,13 @@
 		  (buffer-substring-no-properties (point-max))
 		  (split-string "\n"))
 	      longest-line (->> contents
-				(mapcar (comp length diranger-dired-path-name))
+				(mapcar (-compose length diranger-dired-path-name))
 				(apply #'max))))
       (kill-buffer dired-buffer)
       (insert
        (string-join
 	(->> contents
-	     (drop 1)
+	     (-drop 1)
 	     (mapcar
 	      (lambda (line)
 		(diranger-process-dired-line-for-preview

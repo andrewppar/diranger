@@ -16,8 +16,12 @@
 ;; I can't find a way to not use evil's motion map
 
 ;;; Code:
+
 (require 'diranger-core)
 (require 'diranger-motion)
+(require 'diranger-utils)
+
+(require 'dash)
 
 (defvar *diranger-kill-ring* '())
 
@@ -32,7 +36,7 @@
 (defun kill-ring-remove-last ()
   "Remove the oldest item from diranger's kill ring."
   (setq *diranger-kill-ring*
-	(funcall (comp reverse cdr reverse) *diranger-kill-ring*)))
+	(funcall (-compose reverse cdr reverse) *diranger-kill-ring*)))
 
 (defun diranger-kill-ring-add (old-path new-path)
   "Add an binding from OLD-PATH to NEW-PATH to diranger's kill ring."
@@ -46,14 +50,12 @@
   "Update diranger's kill ring with NEW-VALUE at KEY."
   (let ((result '())
 	(found? nil))
-    (dolist (binding *diranger-kill-ring*)
-      (let ((k (car binding))
-	    (v (cdr binding)))
-	(if (equal key k)
-	    (progn
-	      (push (cons key new-value) result)
-	      (setq found? t))
-	(push (cons k v) result))))
+    (doalist (k v *diranger-kill-ring)
+      (if (equal key k)
+	  (progn
+	    (push (cons key new-value) result)
+	    (setq found? t))
+	(push (cons k v) result)))
     (setq *diranger-kill-ring* (reverse result))
     (kill-new new-value)
     (unless found?
@@ -66,22 +68,6 @@
 (defun diranger-kill-ring-current-item ()
   "Get the current item from diranger's kill ring."
   (car *diranger-kill-ring*))
-
-(defun diranger-buffer-contents ()
-  "Get the full buffer substring of current buffer."
-  (buffer-substring (point-min) (point-max)))
-
-(defun diranger-buffer-longest-line-length (buffer-or-name)
-  "Get the length of the longest line in BUFFER-OR-NAME."
-  (save-window-excursion
-    (switch-to-buffer buffer-or-name)
-    (let ((contents (-> (diranger-buffer-contents)
-			split-string
-			cdr))
-	  (longest  0))
-      (dolist (line contents)
-	(setq longest (max longest (length line))))
-      longest)))
 
 (defmacro defun-diranger-operation (name args comment &rest body)
   "Create a function with NAME, ARGS, COMMENT, and BODY."

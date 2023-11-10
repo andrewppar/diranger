@@ -16,7 +16,9 @@
 
 ;;; Code:
 (require 'diranger-core)
+(require 'dash)
 (require 'ivy)
+
 (defvar *diranger-focused-entry* nil)
 
 (defun kill-buffer-safe (buffer-name)
@@ -124,8 +126,8 @@
 		 (buffer-substring-no-properties start end)
 		 "\n"))
 	 (entries (->> lines
-		       (drop 1)
-		       (filter (lambda (line) (not (equal line ""))))))
+		       (-drop 1)
+		       (-filter (lambda (line) (not (equal line ""))))))
 	 (entry (ivy-completing-read "Jump to: " entries nil t))
 	 (line-num (+ (cl-position entry entries :test #'equal) 2)))
     (goto-line line-num)
