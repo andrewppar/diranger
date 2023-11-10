@@ -6,7 +6,7 @@
 ;; Created: 29 August 2023
 ;; Homepage: N/A
 ;; Keywords: dired
-;; Package-Requires: ((emacs "28"))
+;; Package-Requires: ((emacs "28") (dash "2.12.1"))
 ;; SPDX-License-Identifier: MIT
 ;; Version: 3.0
 
@@ -36,7 +36,7 @@
 (defun kill-ring-remove-last ()
   "Remove the oldest item from diranger's kill ring."
   (setq *diranger-kill-ring*
-	(funcall (-compose reverse cdr reverse) *diranger-kill-ring*)))
+	(funcall (-compose #'reverse #'cdr #'reverse) *diranger-kill-ring*)))
 
 (defun diranger-kill-ring-add (old-path new-path)
   "Add an binding from OLD-PATH to NEW-PATH to diranger's kill ring."

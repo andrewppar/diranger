@@ -6,7 +6,7 @@
 ;; Created: 29 August 2023
 ;; Homepage: N/A
 ;; Keywords: dired
-;; Package-Requires: ((emacs "28"))
+;; Package-Requires: ((emacs "28") (dash "2.12.1))
 ;; SPDX-License-Identifier: MIT
 ;; Version: 3.0
 
