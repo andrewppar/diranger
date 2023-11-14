@@ -209,6 +209,27 @@
 	     (copy-file from to t)
 	     (delete-file from))))))
 
+(defun-diranger-operation diranger-chmod ()
+  "Diranger modify the permissions of a file."
+  (interactive)
+  (let* ((to-mod (expand-file-name (diranger-selected-entry)))
+	 (modes  (file-attribute-modes (file-attributes to-mod)))
+	 (default (and (stringp modes)
+		       (string-match "^.\\(...\\)\\(...\\)\\(...\\)$" modes)
+		       (string-replace
+			"-" ""
+			(format "u=%s,g=%s,o=%s"
+				(match-string 1 modes)
+				(match-string 2 modes)
+				(match-string 3 modes)))))
+	 (new-modes-string (read-string
+			    (format "Change mode of %s to: " to-mod)))
+	 (new-modes (if (string-match-p "^[0-7]+" new-modes-string)
+			(string-to-number new-modes-string 8)
+		      (file-modes-symbolic-to-number
+		       new-modes-string (file-modes to-mod 'nofollow)))))
+    (set-file-modes to-mod new-modes)))
+
 (defun-diranger-operation diranger-delete ()
   "Delete the entry at point."
   (interactive)
