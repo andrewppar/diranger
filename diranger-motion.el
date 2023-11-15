@@ -27,7 +27,7 @@
   "Kill all diranger buffers."
   (interactive)
   (delete-other-windows)
-  (mapcar #'kill-buffer *diranger-buffers*)
+  (mapcar #'kill-buffer-safe *diranger-buffers*)
   (setq *diranger-focused-entry* nil)
  ;; (remove-hook 'window-configuration-change-hook 'diranger-check-exit)
   )
