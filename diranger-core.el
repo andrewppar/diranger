@@ -208,17 +208,16 @@
 				(mapcar (-compose #'length #'diranger-dired-path-name))
 				(apply #'max))))
       (kill-buffer dired-buffer)
-      (insert
-       (string-join
-	(->> contents
-	     (-drop 1)
-	     (mapcar
-	      (lambda (line)
-		(diranger-process-dired-line-for-preview
-		 full-path line longest-line))))
-	"\n"))
-      (goto-char (point-min))
-      (forward-line 1))))
+      (let ((processed-contents '()))
+	(dolist (line (cdr contents))
+	  (let ((processed-line (diranger-process-dired-line-for-preview
+				 full-path line longest-line)))
+	    (message processed-line)
+	    (unless (equal processed-line "")
+	      (push processed-line processed-contents))))
+	(insert (string-join (reverse processed-contents) "\n"))
+	(goto-char (point-min))
+	(forward-line 1)))))
 
 (defun diranger-preview-show-file (entry)
   "Generate a preview of ENTRY."
