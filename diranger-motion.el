@@ -107,7 +107,6 @@
 (defun-diranger-motion diranger-out
     "Move diranger up a directory."
   (let ((new-focus (file-name-parent-directory *diranger-focused-entry*)))
-    (message new-focus)
     (if new-focus
 	(progn
 	  (diranger-set-focused-entry new-focus)

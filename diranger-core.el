@@ -212,7 +212,6 @@
 	(dolist (line (cdr contents))
 	  (let ((processed-line (diranger-process-dired-line-for-preview
 				 full-path line longest-line)))
-	    (message processed-line)
 	    (unless (equal processed-line "")
 	      (push processed-line processed-contents))))
 	(insert (string-join (reverse processed-contents) "\n"))
