@@ -20,6 +20,21 @@
 
 (require 'diranger-mode)
 
+(defun diranger-read-file ()
+  "Find a file using Diranger."
+  (interactive)
+  (ivy-read "Find file: "
+	    #'read-file-name-internal
+	    :matcher #'counsel--find-file-matcher
+	    :initial-input nil
+	    :action #'counsel-find-file-action
+	    :preselect (counsel--preselect-file)
+	    :require-match 'confirm-after-completion
+	    :history 'file-name-history
+	    :keymap counsel-find-file-map
+	    :caller 'diranger-find-file))
+
+;;;###autoload
 (defun diranger (&optional filepath)
   "Start a diranger session for optionally FILEPATH.
 
@@ -35,20 +50,6 @@
 	(save-window-excursion
 	  (diranger-quit)
 	  (find-file file))))))
-
-(defun diranger-read-file ()
-  "Find a file using Diranger."
-  (interactive)
-  (ivy-read "Find file: "
-	    #'read-file-name-internal
-	    :matcher #'counsel--find-file-matcher
-	    :initial-input nil
-	    :action #'counsel-find-file-action
-	    :preselect (counsel--preselect-file)
-	    :require-match 'confirm-after-completion
-	    :history 'file-name-history
-	    :keymap counsel-find-file-map
-	    :caller 'diranger-find-file))
 
 (provide 'diranger)
 ;;; diranger.el ends here
